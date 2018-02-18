@@ -38,7 +38,7 @@ ORDER BY views DESC
 question.append('On which days did more than 1% of requests lead to errors?\n')
 
 query.append('''
-SELECT day, percent_error
+SELECT to_char(day, 'FMMonth DD, YYYY') AS day, percent_error
 FROM (
     SELECT error.day, ROUND((error_count/total_count)*100,1) AS percent_error
     FROM
@@ -61,23 +61,28 @@ WHERE percent_error > 1.0
 
 def run_query(query):
     """ Execute the query and return the result set """
-    db = psycopg2.connect(dbname=DBNAME)
-    c = db.cursor()
-    c.execute(query)
-    result = c.fetchall()
-    db.close()
-    return result
+    try:
+        db = psycopg2.connect(dbname=DBNAME)
+        c = db.cursor()
+        c.execute(query)
+        result = c.fetchall()
+        db.close()
+        return result
+    except Exception as e:
+        print(e)
+        return
 
 
 def print_query_result(question, query, type):
     """ Pretty print the results of the executed query """
     print(question)
     res = run_query(query)
-    for i in range(len(res)):
-        print("\t{0} -- {1} {2}".format(res[i][0], res[i][1], type))
+    for row in res:
+        print("\t{0} -- {1} {2}".format(row[0], row[1], type))
     print('\n')
 
 
-# Loop through every query and print the results
-for i in range(len(query)):
-    print_query_result(question[i], query[i], type[i])
+if __name__ == '__main__':
+    # Loop through every query and print the results
+    for i in range(len(query)):
+        print_query_result(question[i], query[i], type[i])

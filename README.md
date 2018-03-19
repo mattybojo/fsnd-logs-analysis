@@ -25,10 +25,10 @@ This project was developed and tested using the following:
   2. Download and install VirtualBox following the instructions on the site.
   3. Download and install Vagrant following the instructions on the site.
   4. Download or clone this repository into the /vagrant directory.
-  5. Download the [newsdata.sql file](https://d17h27t6h515a5.cloudfront.net/topher/2016/August/57b5f748_newsdata/newsdata.zip) and place it into your repo directory from step 2.
+  5. Download the [newsdata.sql file](https://d17h27t6h515a5.cloudfront.net/topher/2016/August/57b5f748_newsdata/newsdata.zip) and place it into your repo directory from step 4.
   6. Run `vagrant up` from the repo directory.  This may take a few minutes.
   7. Run `vagrant ssh` from the repo directory.
-  8. Setup the news database using the following command (run from the repo directory from step 2):
+  8. Setup the news database using the following command (run from the repo directory from step 4):
   ```
   $ psql -d news -f newsdata.sql
   ```
